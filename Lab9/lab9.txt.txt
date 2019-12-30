@@ -1,0 +1,101 @@
+.globl binary_search
+binary_search:
+
+
+SUB sp,sp,#32
+STR r0,[sp,#28]  //backup of numbers array and where keyIndex is going in
+STR lr,[sp,#24] //backup of link register
+STR r9,[sp,#20] //where numbers araay is going
+STR r8,[sp,#16] //middleIndex
+STR r7,[sp,#12] //endIndex-startIndex
+STR r6,[sp,#8] //NumCall
+STR r5,[sp,#4] //use for array
+STR r4,[sp,#0] //use for array
+SUB r7,r3,r2
+ADD r8,r2,r7, LSR #1
+LDR r6,[sp,#32]
+LDR r9,[sp,#28] //r9 gets base address
+ADD r6,r6,#1
+CMP r2,r3
+BLE L1
+
+MOV r0,#-1
+LDR r4,[sp,#0]
+LDR r5,[sp,#4]
+LDR r6,[sp,#8]
+LDR r7,[sp,#12]
+LDR r8,[sp,#16]
+LDR r9,[sp,#20]
+LDR lr,[sp,#24]
+ADD sp,sp,#32
+MOV pc,lr
+
+L1:
+ADD r5,r0,r8, LSL #2
+LDR r4,[r5,#0]
+CMP r4,r1
+BNE L2
+
+MOV r0,r8
+MOV pc,lr
+
+L2:
+CMP r4,r1
+BLT L3
+
+SUB r3,r8,#1
+BL binary_search
+RSB r6,r6,#0
+STR r6,[r9,r8, LSL #2]
+LDR r4,[sp,#0]
+LDR r5,[sp,#4]
+LDR r6,[sp,#8]
+LDR r7,[sp,#12]
+LDR r8,[sp,#16]
+LDR r9,[sp,#20]
+LDR lr,[sp,#24]
+ADD sp,sp,#32
+MOV pc,lr
+
+L3:
+ADD r2,r8,#1
+BL binary_search
+RSB r6,r6,#0
+STR r6,[r9,r8, LSL #2]
+LDR r4,[sp,#0]
+LDR r5,[sp,#4]
+LDR r6,[sp,#8]
+LDR r7,[sp,#12]
+LDR r8,[sp,#16]
+LDR r9,[sp,#20]
+LDR lr,[sp,#24]
+ADD sp,sp,#32
+MOV pc,lr
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
